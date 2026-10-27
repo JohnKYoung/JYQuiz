@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>John's Quiz Site</title>
+
+  <!-- =========================================================================
+       JOHN'S QUIZ SITE - HTML SHELL (React edition)
+       The page is now just a mount point. All views (Landing, Subjects, Quiz,
+       Results, Leaderboard) and the animated canvas backdrop are React
+       components defined in script.js and rendered into #root.
+       ========================================================================= -->
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- React 18 (browser builds, no bundler needed). Versions are pinned. -->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+
+  <!-- Lucide icon data (rendered as SVG by the <Icon> component) -->
+  <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+
+  <!-- Canvas Confetti for score celebrations -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- React mounts the whole app here (including the <canvas id="bgCanvas">) -->
+  <div id="root"></div>
+
+  <!-- Application (must load after React above) -->
+  <script src="script.js"></script>
+</body>
+</html>
