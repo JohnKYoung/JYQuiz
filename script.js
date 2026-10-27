@@ -523,10 +523,24 @@ function Quiz({ category, settings, onFinish, onQuit }) {
   const [answers, setAnswers] = useState([]);
   const [selected, setSelected] = useState(null); // chosen option, TIMEOUT, or null
   const [timeLeft, setTimeLeft] = useState(QUESTION_TIME);
+  const [showQuitConfirm, setShowQuitConfirm] = useState(false);
+  const cancelQuitRef = useRef(null);
   const timeSpent = useRef(0);
 
   const locked = selected !== null;
   const question = questions ? questions[idx] : null;
+
+  useEffect(() => {
+    if (!showQuitConfirm) return;
+
+    cancelQuitRef.current.focus();
+    function handleKeyDown(event) {
+      if (event.key === 'Escape') setShowQuitConfirm(false);
+    }
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showQuitConfirm]);
 
   // Load questions once when the quiz mounts
   useEffect(() => {
@@ -603,7 +617,7 @@ function Quiz({ category, settings, onFinish, onQuit }) {
   }
 
   function quit() {
-    if (window.confirm('Quit current quiz? Progress will be lost.')) onQuit();
+    setShowQuitConfirm(true);
   }
 
   const total = questions ? questions.length : settings.amount;
@@ -682,6 +696,27 @@ function Quiz({ category, settings, onFinish, onQuit }) {
       h('button', { onClick: next, disabled: !locked, className: 'btn btn-primary flex-center gap-xs' },
         h('span', null, idx + 1 < total ? 'Next Question' : 'See Results'),
         h(Icon, { name: 'arrow-right', className: 'icon-sm' })
+      )
+    ),
+    showQuitConfirm && h('div', { className: 'modal-backdrop flex-center' },
+      h('div', {
+        className: 'glass-card modal-content quit-confirm-dialog',
+        role: 'dialog',
+        'aria-modal': 'true',
+        'aria-label': 'Quit quiz confirmation'
+      },
+        h('p', { className: 'quit-confirm-message' }, 'Do you wish to quit the current quiz? Progress will be lost.'),
+        h('div', { className: 'quit-confirm-actions' },
+          h('button', {
+            ref: cancelQuitRef,
+            onClick: () => setShowQuitConfirm(false),
+            className: 'btn btn-secondary btn-sm'
+          }, 'Cancel'),
+          h('button', {
+            onClick: onQuit,
+            className: 'btn btn-primary btn-sm'
+          }, 'Ok')
+        )
       )
     )
   );

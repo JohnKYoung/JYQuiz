@@ -789,6 +789,10 @@ padding: 1.5rem;
 .modal-title { font-size: 1.25rem; font-weight: 900; }
 .scores-list { max-height: 20rem; overflow-y: auto; margin: 1rem 0; }
 
+.quit-confirm-dialog { max-width: 24rem; }
+.quit-confirm-message { line-height: 1.6; }
+.quit-confirm-actions { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem; }
+
 .score-row {
 display: flex;
 align-items: center;
